@@ -306,10 +306,14 @@ document.addEventListener('keydown', (e) => {
   if (e.code === 'ArrowLeft' || e.key === 'a') leftPressed = true;
   if (e.code === 'ArrowRight' || e.key === 'd') rightPressed = true;
   if (e.code === 'Space') {
-    if (gameState === 'start' || gameState === 'gameover' || gameState === 'win') {
+    if (gameState === 'start') {
       gameState = 'running';
       resetBall();
-      if (gameState !== 'running') resetGame();
+    }
+    else if (gameState === 'gameover' || gameState === 'win') {
+      resetGame();
+      gameState = 'running';
+      resetBall();
     }
   }
 });
