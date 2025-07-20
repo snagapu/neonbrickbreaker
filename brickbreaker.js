@@ -42,7 +42,7 @@ const brick = {
 
 let bricks = [];
 let score = 0;
-let lives = 3;
+let lives = 5;
 let gameState = 'start'; // start, running, gameover, win
 
 function initBricks() {
@@ -211,7 +211,7 @@ function moveBall() {
   }
   // Bottom collision
   if (ball.y - ball.radius > canvas.height) {
-    lives--;
+    if (lives > 0) lives--;
     if (lives > 0) {
       resetBall();
     } else {
@@ -284,7 +284,7 @@ function resetBall() {
 
 function resetGame() {
   score = 0;
-  lives = 3;
+  lives = 5;
   gameState = 'start';
   initBricks();
   resetBall();
