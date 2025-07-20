@@ -1,6 +1,17 @@
 // Neon Brick Breaker Game
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const startBtn = document.getElementById('startBtn');
+
+// Responsive canvas resize
+function resizeCanvas() {
+  let w = Math.min(window.innerWidth, 480);
+  let h = Math.min(window.innerHeight * 0.8, 640);
+  canvas.width = w;
+  canvas.height = h;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
 // Neon color palette
 const neonColors = [
@@ -160,6 +171,8 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (gameState === 'start') {
     drawStartScreen();
+    if (isMobile()) startBtn.style.display = 'block';
+    else startBtn.style.display = 'none';
     return;
   }
   drawBricks();
@@ -169,6 +182,10 @@ function draw() {
   drawLives();
   if (gameState === 'gameover' || gameState === 'win') {
     drawGameOver(gameState === 'win');
+    if (isMobile()) startBtn.style.display = 'block';
+    else startBtn.style.display = 'none';
+  } else {
+    startBtn.style.display = 'none';
   }
 }
 
@@ -306,17 +323,36 @@ document.addEventListener('keydown', (e) => {
   if (e.code === 'ArrowLeft' || e.key === 'a') leftPressed = true;
   if (e.code === 'ArrowRight' || e.key === 'd') rightPressed = true;
   if (e.code === 'Space') {
-    if (gameState === 'start') {
-      gameState = 'running';
-      resetBall();
-    }
-    else if (gameState === 'gameover' || gameState === 'win') {
-      resetGame();
-      gameState = 'running';
-      resetBall();
-    }
+    startOrRestartGame();
   }
 });
+
+startBtn.addEventListener('touchstart', function(e) {
+  e.preventDefault();
+  startOrRestartGame();
+});
+startBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  startOrRestartGame();
+});
+
+function startOrRestartGame() {
+  if (gameState === 'start') {
+    gameState = 'running';
+    startBtn.style.display = 'none';
+    resetBall();
+  }
+  else if (gameState === 'gameover' || gameState === 'win') {
+    resetGame();
+    gameState = 'running';
+    startBtn.style.display = 'none';
+    resetBall();
+  }
+}
+
+function isMobile() {
+  return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+}
 document.addEventListener('keyup', (e) => {
   if (e.code === 'ArrowLeft' || e.key === 'a') leftPressed = false;
   if (e.code === 'ArrowRight' || e.key === 'd') rightPressed = false;

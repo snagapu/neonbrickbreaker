@@ -35,7 +35,14 @@
   </style>
 </head>
 <body>
-  <canvas id="gameCanvas" width="480" height="640"></canvas>
+  <div style="position:relative;display:flex;align-items:center;justify-content:center;">
+    <canvas id="gameCanvas" width="480" height="640" style="max-width:100vw;max-height:80vh;width:100%;height:auto;"></canvas>
+    <button id="startBtn" style="
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:18px 44px;border:none;
+      border-radius:32px;background:#0f1020;box-shadow:0 0 18px #00fff7,0 0 48px #00fff7;
+      color:#00fff7;font-family:'Orbitron',Arial,sans-serif;font-size:1.6rem;cursor:pointer;display:none;z-index:10;
+      text-shadow:0 0 10px #00fff7,0 0 20px #00fff7,0 0 40px #00fff7;">START</button>
+  </div>
   <script src="brickbreaker.js"></script>
 </body>
 </html>
