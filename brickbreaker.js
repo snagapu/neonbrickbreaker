@@ -143,11 +143,13 @@ function drawStartScreen() {
   ctx.shadowBlur = 24;
   ctx.textAlign = 'center';
   ctx.fillText('NEON BRICK BREAKER', canvas.width/2, canvas.height/2 - 40);
-  ctx.font = 'bold 22px Orbitron, Arial';
-  ctx.fillStyle = '#ff00ea';
-  ctx.shadowColor = '#ff00ea';
-  ctx.shadowBlur = 16;
-  ctx.fillText('Press SPACE to Start', canvas.width/2, canvas.height/2 + 10);
+  if (!isMobile()) {
+    ctx.font = 'bold 22px Orbitron, Arial';
+    ctx.fillStyle = '#ff00ea';
+    ctx.shadowColor = '#ff00ea';
+    ctx.shadowBlur = 16;
+    ctx.fillText('Press SPACE to Start', canvas.width/2, canvas.height/2 + 10);
+  }
   ctx.restore();
 }
 
@@ -159,20 +161,29 @@ function drawGameOver(win) {
   ctx.shadowBlur = 24;
   ctx.textAlign = 'center';
   ctx.fillText(win ? 'YOU WIN!' : 'GAME OVER', canvas.width/2, canvas.height/2 - 40);
-  ctx.font = 'bold 22px Orbitron, Arial';
-  ctx.fillStyle = '#00fff7';
-  ctx.shadowColor = '#00fff7';
-  ctx.shadowBlur = 16;
-  ctx.fillText('Press SPACE to Restart', canvas.width/2, canvas.height/2 + 10);
+  if (!isMobile()) {
+    ctx.font = 'bold 22px Orbitron, Arial';
+    ctx.fillStyle = '#00fff7';
+    ctx.shadowColor = '#00fff7';
+    ctx.shadowBlur = 16;
+    ctx.fillText('Press SPACE to Restart', canvas.width/2, canvas.height/2 + 10);
+  }
   ctx.restore();
 }
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Show/hide and update button text on mobile
+  if (isMobile()) {
+    startBtn.style.display = 'block';
+    if (gameState === 'start') startBtn.textContent = 'START';
+    else if (gameState === 'gameover' || gameState === 'win') startBtn.textContent = 'RESTART';
+    else startBtn.style.display = 'none';
+  } else {
+    startBtn.style.display = 'none';
+  }
   if (gameState === 'start') {
     drawStartScreen();
-    if (isMobile()) startBtn.style.display = 'block';
-    else startBtn.style.display = 'none';
     return;
   }
   drawBricks();
@@ -182,12 +193,11 @@ function draw() {
   drawLives();
   if (gameState === 'gameover' || gameState === 'win') {
     drawGameOver(gameState === 'win');
-    if (isMobile()) startBtn.style.display = 'block';
-    else startBtn.style.display = 'none';
-  } else {
-    startBtn.style.display = 'none';
   }
 }
+
+//console.log('User agent:', navigator.userAgent);
+//console.log('isMobile:', isMobile());
 
 function movePaddle() {
   paddle.x += paddle.dx;
