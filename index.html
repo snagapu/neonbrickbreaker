@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Brick Breaker</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #0f1020;
+      overflow: hidden;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    canvas {
+      background: #181b2c;
+      box-shadow: 0 0 40px #00fff7, 0 0 0 8px #181b2c;
+      border-radius: 16px;
+      display: block;
+    }
+    .neon-text {
+      color: #00fff7;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 2rem;
+      text-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7, 0 0 40px #00fff7;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="480" height="640"></canvas>
+  <script src="brickbreaker.js"></script>
+</body>
+</html>
